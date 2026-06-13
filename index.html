@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a6b4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Jalan Pulang">
+<title>Jalan Pulang</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#faf7f2;color:#1c1c1e;min-height:100vh}
+.hdr{background:linear-gradient(135deg,#1a6b4a,#0f4d35);color:#fff;text-align:center;padding:2.5rem 1.5rem 2rem;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hdr-ar{font-family:'Amiri',serif;font-size:1.8rem;color:#f0d98a;margin-bottom:.5rem}
+.hdr h1{font-size:1.6rem;font-weight:600;margin-bottom:.3rem}
+.hdr p{font-size:.9rem;opacity:.8;font-weight:300}
+.tabs{display:flex;overflow-x:auto;background:#fff;border-bottom:2px solid #e8f5ee;scrollbar-width:none;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:.9rem 1.1rem;border:none;background:none;cursor:pointer;font-size:.82rem;font-weight:500;color:#6b7280;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-family:'Inter',sans-serif}
+.tab.on{color:#1a6b4a;border-bottom-color:#1a6b4a}
+.main{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.sec{display:none}.sec.on{display:block}
+.card{background:#fff;border-radius:16px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)}
+.card-g{background:linear-gradient(135deg,#1a6b4a,#2d8f63);color:#fff}
+.card-e{background:linear-gradient(135deg,#92701a,#b8902a);color:#fff}
+.card h3{font-size:1rem;font-weight:600;margin-bottom:.6rem;color:#1a6b4a}
+.card-g h3,.card-e h3{color:#fff}
+.card p{font-size:.88rem;line-height:1.65;color:#6b7280}
+.card-g p,.card-e p{color:rgba(255,255,255,.9)}
+.ar{font-family:'Amiri',serif;font-size:1.3rem;text-align:right;direction:rtl;line-height:2;color:#1a6b4a;margin:.5rem 0}
+.card-g .ar,.card-e .ar{color:#f0d98a}
+.lt{font-style:italic;font-size:.82rem;color:#6b7280;margin-bottom:.3rem}
+.card-g .lt,.card-e .lt{color:rgba(255,255,255,.75)}
+.tr{font-size:.85rem;color:#1c1c1e;font-weight:500}
+.card-g .tr,.card-e .tr{color:#fff}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+.ti{background:#fff;border:2px solid #e8f5ee;border-radius:12px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s;user-select:none}
+.ti.ck{background:#e8f5ee;border-color:#1a6b4a}
+.ti .ic{font-size:1.5rem;margin-bottom:.3rem}
+.ti .lb{font-size:.8rem;font-weight:500;color:#6b7280}
+.ti.ck .lb{color:#1a6b4a}
+.ti .ch{font-size:.7rem;color:#1a6b4a;margin-top:.2rem;opacity:0}
+.ti.ck .ch{opacity:1}
+.pw{margin-bottom:1.5rem}
+.pl{display:flex;justify-content:space-between;font-size:.82rem;color:#6b7280;margin-bottom:.4rem}
+.pb{background:#f3f4f6;border-radius:99px;height:10px;overflow:hidden}
+.pf{background:linear-gradient(90deg,#1a6b4a,#2d8f63);height:100%;border-radius:99px;transition:width .4s ease}
+.fl{display:flex;flex-direction:column;gap:.75rem}
+.fi{background:#fff;border-radius:12px;border-left:4px solid #e8f5ee;padding:1rem 1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);cursor:pointer;transition:all .2s}
+.fi.af{border-left-color:#1a6b4a}
+.fh{display:flex;align-items:center;justify-content:space-between}
+.ft{font-size:.9rem;font-weight:600;color:#1c1c1e}
+.fb{font-size:.7rem;padding:.2rem .6rem;border-radius:99px;background:#e8f5ee;color:#1a6b4a;font-weight:500}
+.fi.af .fb{background:#1a6b4a;color:#fff}
+.fd{font-size:.82rem;color:#6b7280;margin-top:.4rem;line-height:1.5}
+.fa{display:none;margin-top:.8rem;padding-top:.8rem;border-top:1px dashed #e8f5ee}
+.fi.op .fa{display:block}
+.ai{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:.5rem;font-size:.82rem;color:#1c1c1e}
+.ad{width:6px;height:6px;background:#1a6b4a;border-radius:50%;margin-top:6px;flex-shrink:0}
+.dc{background:#fff;border-radius:16px;padding:1.5rem;margin-bottom:1rem;border:1px solid #e8f5ee;position:relative}
+.db{position:absolute;top:1rem;right:1rem;background:#e8f5ee;color:#1a6b4a;font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:99px}
+.dar{font-family:'Amiri',serif;font-size:1.4rem;text-align:right;direction:rtl;color:#1a6b4a;line-height:2;margin-bottom:.5rem}
+.dl{font-size:.8rem;font-style:italic;color:#6b7280;margin-bottom:.3rem}
+.da{font-size:.85rem;color:#1c1c1e;margin-bottom:.8rem}
+.cw{display:flex;align-items:center;gap:.75rem}
+.cb{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;font-size:1.1rem;font-weight:600;transition:all .15s;font-family:'Inter',sans-serif}
+.cd{background:#f3f4f6;color:#6b7280}
+.ci{background:#1a6b4a;color:#fff}
+.ci:active{transform:scale(.92)}
+.cn{font-size:1.3rem;font-weight:700;color:#1a6b4a;min-width:40px;text-align:center}
+.ct{font-size:.78rem;color:#6b7280;margin-left:auto}
+.mc{background:linear-gradient(135deg,#0f4d35,#1a6b4a);border-radius:20px;padding:2rem 1.5rem;margin-bottom:1rem;color:#fff;text-align:center;position:relative;overflow:hidden}
+.mar{font-family:'Amiri',serif;font-size:1.4rem;color:#f0d98a;line-height:2;margin-bottom:1rem;direction:rtl}
+.mt{font-size:.9rem;line-height:1.7;color:rgba(255,255,255,.9);margin-bottom:.8rem;font-style:italic}
+.ms{font-size:.75rem;color:#f0d98a;font-weight:500}
+.rbtn{display:block;margin:.5rem auto 0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.5rem 1.2rem;border-radius:99px;font-size:.8rem;cursor:pointer;font-family:'Inter',sans-serif}
+.ta{width:100%;min-height:120px;border:2px solid #e8f5ee;border-radius:12px;padding:1rem;font-size:.88rem;font-family:'Inter',sans-serif;color:#1c1c1e;resize:vertical;outline:none;background:#fff}
+.ta:focus{border-color:#1a6b4a}
+.btn{background:#1a6b4a;color:#fff;border:none;padding:.7rem 1.5rem;border-radius:10px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.jd{background:#fff;border-radius:16px;margin-bottom:1rem;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.jh{background:#1a6b4a;color:#fff;padding:.75rem 1.2rem;font-size:.88rem;font-weight:600}
+.jb{padding:1rem 1.2rem}
+.jr{display:flex;align-items:flex-start;gap:1rem;padding:.6rem 0;border-bottom:1px solid #e8f5ee;font-size:.83rem}
+.jr:last-child{border-bottom:none}
+.jw{color:#b8902a;font-weight:600;min-width:65px;font-size:.78rem}
+.ja{color:#1c1c1e;line-height:1.4}
+.st{font-size:1.1rem;font-weight:700;color:#1a6b4a;margin-bottom:1rem}
+.ib{background:#e8f5ee;border-left:3px solid #1a6b4a;border-radius:0 10px 10px 0;padding:.9rem 1rem;font-size:.83rem;color:#1a6b4a;margin-bottom:1rem;line-height:1.55}
+.sb{background:#fff;border-radius:16px;padding:1.2rem;display:flex;align-items:center;gap:1rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sn{font-size:2rem;font-weight:700;color:#1a6b4a}
+.sl{font-size:.8rem;color:#6b7280}
+.dt{text-align:center;font-size:.8rem;color:#6b7280;margin-bottom:1rem}
+.pg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:1rem}
+.pi{background:#fff;border-radius:12px;padding:1rem .5rem;text-align:center;border:1px solid #e8f5ee;font-size:.75rem;color:#6b7280}
+.pi .pk{font-size:1.4rem;display:block;margin-bottom:.3rem}
+.pi .pn{font-weight:500;color:#1c1c1e}
+.sv{font-size:.78rem;color:#1a6b4a;margin-top:.4rem;display:none}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-ar" id="hdr-ar"></div>
+  <h1>🌿 Jalan Pulang</h1>
+  <p>Panduan Taubat &amp; Perbaikan Diri Seumur Hidup</p>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="goTab('beranda',this)">🏠 Beranda</button>
+  <button class="tab" onclick="goTab('fase',this)">🗺️ Fase</button>
+  <button class="tab" onclick="goTab('jadwal',this)">📅 Jadwal</button>
+  <button class="tab" onclick="goTab('dzikir',this)">📿 Dzikir</button>
+  <button class="tab" onclick="goTab('motivasi',this)">💛 Motivasi</button>
+  <button class="tab" onclick="goTab('catatan',this)">📓 Catatan</button>
+</div>
+<div class="main">
+<div class="sec on" id="beranda">
+  <div class="dt" id="tgl"></div>
+  <div class="sb"><div style="font-size:2rem">🔥</div><div><div class="sn" id="streak">0</div><div class="sl">hari istiqomah berturut-turut</div></div></div>
+  <div class="card card-g">
+    <div class="ar" id="ayat-hdr"></div>
+    <p class="lt" id="ayat-lt"></p>
+    <p class="tr" id="ayat-tr"></p>
+  </div>
+  <div class="st">✅ Checklist Hari Ini</div>
+  <div class="pw">
+    <div class="pl"><span>Progress</span><span id="ptxt">0 / 8</span></div>
+    <div class="pb"><div class="pf" id="pfill" style="width:0%"></div></div>
+  </div>
+  <div class="tgrid">
+    <div class="ti" id="t1" onclick="tog('t1')"><div class="ic">🌅</div><div class="lb">Shalat Subuh</div><div class="ch">✓</div></div>
+    <div class="ti" id="t2" onclick="tog('t2')"><div class="ic">☀️</div><div class="lb">Shalat Dzuhur</div><div class="ch">✓</div></div>
+    <div class="ti" id="t3" onclick="tog('t3')"><div class="ic">🌤️</div><div class="lb">Shalat Ashar</div><div class="ch">✓</div></div>
+    <div class="ti" id="t4" onclick="tog('t4')"><div class="ic">🌆</div><div class="lb">Shalat Maghrib</div><div class="ch">✓</div></div>
+    <div class="ti" id="t5" onclick="tog('t5')"><div class="ic">🌙</div><div class="lb">Shalat Isya</div><div class="ch">✓</div></div>
+    <div class="ti" id="t6" onclick="tog('t6')"><div class="ic">📿</div><div class="lb">Istighfar 100x</div><div class="ch">✓</div></div>
+    <div class="ti" id="t7" onclick="tog('t7')"><div class="ic">📖</div><div class="lb">Baca Al-Quran</div><div class="ch">✓</div></div>
+    <div class="ti" id="t8" onclick="tog('t8')"><div class="ic">🤲</div><div class="lb">Shalat Taubat</div><div class="ch">✓</div></div>
+  </div>
+  <div class="card"><h3>💡 Fase Saat Ini</h3><p>Kamu sedang di <strong style="color:#1a6b4a">Fase 1 — Menyalakan Cahaya</strong>. Fokus: shalat 5 waktu. Konsisten lebih penting dari sempurna.</p></div>
+  <div class="pg">
+    <div class="pi"><span class="pk">🕌</span><div class="pn">Shalat</div><div>Tiang agama</div></div>
+    <div class="pi"><span class="pk">📿</span><div class="pn">Dzikir</div><div>Tenang hati</div></div>
+    <div class="pi"><span class="pk">📖</span><div class="pn">Quran</div><div>Cahaya jalan</div></div>
+  </div>
+</div>
+<div class="sec" id="fase">
+  <div class="ib">🌱 Taubat bukan sprint — ini maraton seumur hidup. Tidak perlu sempurna, yang penting tidak berhenti.</div>
+  <div class="fl">
+    <div class="fi af op" onclick="openFase(this)">
+      <div class="fh"><span class="ft">🕯️ Fase 1 — Menyalakan Cahaya</span><span class="fb">Bulan 1-3</span></div>
+      <div class="fd">Kembali ke shalat. Ini fondasi segalanya.</div>
+      <div class="fa">
+        <div class="ai"><div class="ad"></div><span>Shalat 5 waktu, meski awalnya bolong. Yang penting terus mencoba.</span></div>
+        <div class="ai"><div class="ad"></div><span>Istighfar minimal 100x sehari.</span></div>
+        <div class="ai"><div class="ad"></div><span>Shalat Taubat 2 rakaat minimal 1x seminggu.</span></div>
+        <div class="ai"><div class="ad"></div><span>Hindari pemicu dosa lama.</span></div>
+      </div>
+    </div>
+    <div class="fi" onclick="openFase(this)">
+      <div class="fh"><span class="ft">🌱 Fase 2 — Menumbuhkan Akar</span><span class="fb">Bulan 4-6</span></div>
+      <div class="fd">Shalat konsisten. Tambah amalan sunnah dan Al-Quran.</div>
+      <div class="fa">
+        <div class="ai"><div class="ad"></div><span>Tambah shalat sunnah rawatib.</span></div>
+        <div class="ai"><div class="ad"></div><span>Baca Al-Quran minimal 1 halaman per hari.</span></div>
+        <div class="ai"><div class="ad"></div><span>Dzikir pagi dan petang setiap hari.</span></div>
+        <div class="ai"><div class="ad"></div><span>Bergaul dengan teman shalih.</span></div>
+      </div>
+    </div>
+    <div class="fi" onclick="openFase(this)">
+      <div class="fh"><span class="ft">🌿 Fase 3 — Membangun Rumah</span><span class="fb">Bulan 7-12</span></div>
+      <div class="fd">Ibadah wajib stabil. Bangun karakter mulia.</div>
+      <div class="fa">
+        <div class="ai"><div class="ad"></div><span>Puasa Senin-Kamis.</span></div>
+        <div class="ai"><div class="ad"></div><span>Bangun Tahajud minimal 2x seminggu.</span></div>
+        <div class="ai"><div class="ad"></div><span>Belajar ilmu agama dari ulama terpercaya.</span></div>
+        <div class="ai"><div class="ad"></div><span>Selesaikan hak orang lain yang belum ditunaikan.</span></div>
+      </div>
+    </div>
+    <div class="fi" onclick="openFase(this)">
+      <div class="fh"><span class="ft">🌳 Fase 4 — Berbuah</span><span class="fb">Tahun ke-2</span></div>
+      <div class="fd">Taubat memberi manfaat bagi orang sekitar.</div>
+      <div class="fa">
+        <div class="ai"><div class="ad"></div><span>Ajak orang lain dengan lemah lembut.</span></div>
+        <div class="ai"><div class="ad"></div><span>Amal jariyah — wakaf, bantu masjid, ajar mengaji.</span></div>
+        <div class="ai"><div class="ad"></div><span>Hafalan Al-Quran mulai surah pendek.</span></div>
+        <div class="ai"><div class="ad"></div><span>Rencanakan umroh atau haji.</span></div>
+      </div>
+    </div>
+    <div class="fi" onclick="openFase(this)">
+      <div class="fh"><span class="ft">♾️ Fase 5 — Istiqomah Seumur Hidup</span><span class="fb">Selamanya</span></div>
+      <div class="fd">Taubat bukan titik akhir, tapi cara hidup.</div>
+      <div class="fa">
+        <div class="ai"><div class="ad"></div><span>Muhasabah setiap malam.</span></div>
+        <div class="ai"><div class="ad"></div><span>Jika terjatuh, segera bangkit dan taubat lagi.</span></div>
+        <div class="ai"><div class="ad"></div><span>Tujuan akhir: Husnul Khatimah.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sec" id="jadwal">
+  <div class="ib">📅 Mulai dari yang mampu. Konsistensi lebih penting dari kesempurnaan.</div>
+  <div class="jd"><div class="jh">🌅 PAGI</div><div class="jb">
+    <div class="jr"><span class="jw">04.00</span><span class="ja">Tahajud 2-4 rakaat bila mampu. Doa memohon taubat.</span></div>
+    <div class="jr"><span class="jw">Sblm Subuh</span><span class="ja">Shalat Sunnah Fajar. Baca Sayyidul Istighfar.</span></div>
+    <div class="jr"><span class="jw">Subuh</span><span class="ja">Shalat Subuh. Dzikir pagi 10 menit.</span></div>
+    <div class="jr"><span class="jw">06.00</span><span class="ja">Baca Al-Quran minimal 1 halaman.</span></div>
+  </div></div>
+  <div class="jd"><div class="jh">☀️ SIANG</div><div class="jb">
+    <div class="jr"><span class="jw">Aktivitas</span><span class="ja">Bekerja dengan niat ibadah. Bismillah setiap mulai.</span></div>
+    <div class="jr"><span class="jw">Dzuhur</span><span class="ja">Shalat Dzuhur + rawatib. Istighfar 33x.</span></div>
+    <div class="jr"><span class="jw">Ashar</span><span class="ja">Shalat Ashar. Jangan lewatkan.</span></div>
+  </div></div>
+  <div class="jd"><div class="jh">🌙 MALAM</div><div class="jb">
+    <div class="jr"><span class="jw">Maghrib</span><span class="ja">Shalat Maghrib + sunnah. Baca Quran hingga Isya.</span></div>
+    <div class="jr"><span class="jw">Isya</span><span class="ja">Shalat Isya + sunnah. Jaga shalat ini.</span></div>
+    <div class="jr"><span class="jw">20.00</span><span class="ja">Shalat Taubat 2 rakaat. Curhat kepada Allah.</span></div>
+    <div class="jr"><span class="jw">Tidur</span><span class="ja">Muhasabah. Doa tidur. Istighfar hingga tertidur.</span></div>
+  </div></div>
+  <div class="card card-e"><h3>📌 Amalan Mingguan</h3>
+    <div class="ai" style="margin-top:.5rem"><div class="ad" style="background:#f0d98a"></div><span style="color:rgba(255,255,255,.9);font-size:.83rem"><strong>Jumat:</strong> Shalawat, Al-Kahfi, sedekah</span></div>
+    <div class="ai"><div class="ad" style="background:#f0d98a"></div><span style="color:rgba(255,255,255,.9);font-size:.83rem"><strong>Senin-Kamis:</strong> Puasa sunnah</span></div>
+    <div class="ai"><div class="ad" style="background:#f0d98a"></div><span style="color:rgba(255,255,255,.9);font-size:.83rem"><strong>Malam Jumat:</strong> Shalat Taubat dan munajat</span></div>
+  </div>
+</div>
+<div class="sec" id="dzikir">
+  <div class="ib">📿 Ketuk + untuk menghitung. Data tersimpan otomatis.</div>
+  <div class="dc">
+    <div class="db">Wajib Harian</div>
+    <div class="dar" id="dz1-ar"></div>
+    <div class="dl">Astaghfirullaahal-'azhiim wa atuubu ilayh</div>
+    <div class="da">Aku memohon ampun kepada Allah Yang Maha Agung dan bertaubat kepada-Nya</div>
+    <div class="cw"><button class="cb cd" type="button" onclick="dec('c1')">-</button><div class="cn" id="c1">0</div><button class="cb ci" type="button" onclick="inc('c1')">+</button><div class="ct">Target: 100x</div></div>
+  </div>
+  <div class="dc">
+    <div class="db">Sayyidul Istighfar</div>
+    <div class="dar" id="dz2-ar"></div>
+    <div class="dl">Allaahumma anta rabbii laa ilaaha illaa anta...</div>
+    <div class="da">Penghulu istighfar. Dibaca pagi dan petang. (HR. Bukhari)</div>
+    <div class="cw"><button class="cb cd" type="button" onclick="dec('c2')">-</button><div class="cn" id="c2">0</div><button class="cb ci" type="button" onclick="inc('c2')">+</button><div class="ct">Target: 1x pagi &amp; petang</div></div>
+  </div>
+  <div class="dc">
+    <div class="db">Setelah Shalat</div>
+    <div class="dar" id="dz3-ar"></div>
+    <div class="dl">Sub-haanallahi wa bihamdih</div>
+    <div class="da">Dosanya diampuni meski seperti buih di lautan. (HR. Muslim)</div>
+    <div class="cw"><button class="cb cd" type="button" onclick="dec('c3')">-</button><div class="cn" id="c3">0</div><button class="cb ci" type="button" onclick="inc('c3')">+</button><div class="ct">Target: 33x tiap shalat</div></div>
+  </div>
+  <div class="dc">
+    <div class="db">Doa Istiqomah</div>
+    <div class="dar" id="dz4-ar"></div>
+    <div class="dl">Yaa muqallibal quluub tsabbit qalbii 'alaa diinik</div>
+    <div class="da">Wahai Dzat yang membolak-balikkan hati, tetapkan hatiku di atas agama-Mu.</div>
+    <div class="cw"><button class="cb cd" type="button" onclick="dec('c4')">-</button><div class="cn" id="c4">0</div><button class="cb ci" type="button" onclick="inc('c4')">+</button><div class="ct">Target: 10x sehari</div></div>
+  </div>
+  <button class="btn" type="button" style="width:100%;margin-top:.5rem" onclick="resetAll()">Reset Semua Hitungan</button>
+</div>
+<div class="sec" id="motivasi">
+  <div class="mc">
+    <div class="mar" id="mot-ar"></div>
+    <div class="mt" id="mot-tr"></div>
+    <div class="ms" id="mot-src"></div>
+    <button class="rbtn" type="button" onclick="nextMot()">Motivasi Lainnya</button>
+  </div>
+  <div class="card"><h3>🌟 Pengingat Penting</h3>
+    <div class="ai" style="margin-bottom:.6rem"><div class="ad"></div><span style="font-size:.85rem"><strong>1.</strong> Allah tidak pernah menutup pintu taubat selama nafas masih ada.</span></div>
+    <div class="ai" style="margin-bottom:.6rem"><div class="ad"></div><span style="font-size:.85rem"><strong>2.</strong> Bangkit lebih cepat dari jatuh — setan menang saat kita menyerah.</span></div>
+    <div class="ai"><div class="ad"></div><span style="font-size:.85rem"><strong>3.</strong> Perjalananmu sudah dimulai — itu sendiri sudah bernilai di hadapan Allah.</span></div>
+  </div>
+  <div class="card card-g"><h3>Untuk Kalian Berdua</h3><p>Saling mengingatkan adalah bentuk kasih sayang tertinggi. Perjalanan taubat bersama jauh lebih kuat dari yang dilakukan sendirian. Semoga Allah tetapkan kalian dalam kebaikan.</p></div>
+</div>
+<div class="sec" id="catatan">
+  <div class="st">📓 Catatan dan Muhasabah</div>
+  <div class="ib">Tulis perasaan, doa, atau evaluasi harimu. Tersimpan di perangkatmu.</div>
+  <div class="card"><h3>Doa Pribadiku</h3><p style="margin-bottom:.8rem">Tulis doa khusus kepada Allah:</p>
+    <textarea class="ta" id="doa" placeholder="Ya Allah, aku mohon ampun atas..."></textarea>
+    <button class="btn" type="button" style="margin-top:.7rem" onclick="sv('doa')">Simpan Doa</button>
+    <div class="sv" id="sv-doa">Tersimpan</div>
+  </div>
+  <div class="card"><h3>Muhasabah Harian</h3><p style="margin-bottom:.8rem">Apa yang baik? Apa yang perlu diperbaiki?</p>
+    <textarea class="ta" id="muhasabah" placeholder="Hari ini aku berhasil... dan perlu memperbaiki..."></textarea>
+    <button class="btn" type="button" style="margin-top:.7rem" onclick="sv('muhasabah')">Simpan</button>
+    <div class="sv" id="sv-muhasabah">Tersimpan</div>
+  </div>
+  <div class="card"><h3>Target Bulan Ini</h3><p style="margin-bottom:.8rem">1-3 target ibadah bulan ini:</p>
+    <textarea class="ta" id="target" placeholder="1. Tidak lewatkan Subuh&#10;2. Baca Quran tiap hari"></textarea>
+    <button class="btn" type="button" style="margin-top:.7rem" onclick="sv('target')">Simpan</button>
+    <div class="sv" id="sv-target">Tersimpan</div>
+  </div>
+</div>
+</div>
+<script>
+var MOTS=[
+  {ar:'\u0642\u064f\u0644\u0652 \u064a\u064e\u0627 \u0639\u0650\u0628\u064e\u0627\u062f\u0650\u064a\u064e \u0627\u0644\u064e\u0651\u0630\u0650\u064a\u0646\u064e \u0623\u064e\u0633\u0652\u0631\u064e\u0641\u064f\u0648\u0627 \u0644\u064e\u0627 \u062a\u064e\u0642\u0652\u0646\u064e\u0637\u064f\u0648\u0627 \u0645\u0650\u0646\u0652 \u0631\u064e\u062d\u0652\u0645\u064e\u0629\u0650 \u0627\u0644\u0644\u064e\u0651\u0647\u0650',tr:'Janganlah berputus asa dari rahmat Allah.',src:'QS. Az-Zumar: 53'},
+  {ar:'\u0625\u0650\u0646\u064e\u0651 \u0627\u0644\u0644\u064e\u0651\u0647\u064e \u064a\u064e\u063a\u0652\u0641\u0650\u0631\u064f \u0627\u0644\u0630\u064f\u0651\u0646\u064f\u0648\u0628\u064e \u062c\u064e\u0645\u0650\u064a\u0639\u064b\u0627',tr:'Sesungguhnya Allah mengampuni dosa-dosa semuanya.',src:'QS. Az-Zumar: 53'},
+  {ar:'\u0643\u064f\u0644\u064f\u0651 \u0628\u064e\u0646\u0650\u064a \u0622\u062f\u064e\u0645\u064e \u062e\u064e\u0637\u064e\u0651\u0627\u0621\u064c \u0648\u064e\u062e\u064e\u064a\u0652\u0631\u064f \u0627\u0644\u0652\u062e\u064e\u0637\u064e\u0651\u0627\u0626\u0650\u064a\u0646\u064e \u0627\u0644\u062a\u064e\u0651\u0648\u064e\u0651\u0627\u0628\u064f\u0648\u0646\u064e',tr:'Setiap anak Adam berbuat salah, dan terbaik adalah yang banyak bertaubat.',src:'HR. Tirmidzi'},
+  {ar:'\u0625\u0650\u0646\u064e\u0651 \u0627\u0644\u0652\u062d\u064e\u0633\u064e\u0646\u064e\u0627\u062a\u0650 \u064a\u064f\u0630\u0652\u0647\u0650\u0628\u0652\u0646\u064e \u0627\u0644\u0633\u064e\u0651\u064a\u0650\u0651\u0626\u064e\u0627\u062a\u0650',tr:'Sesungguhnya kebaikan-kebaikan menghapus keburukan-keburukan.',src:'QS. Hud: 114'},
+  {ar:'\u0625\u0650\u0646\u064e\u0651 \u0627\u0644\u0644\u064e\u0651\u0647\u064e \u064a\u064f\u062d\u0650\u0628\u064f\u0651 \u0627\u0644\u062a\u064e\u0651\u0648\u064e\u0651\u0627\u0628\u0650\u064a\u0646\u064e \u0648\u064e\u064a\u064f\u062d\u0650\u0628\u064f\u0651 \u0627\u0644\u0652\u0645\u064f\u062a\u064e\u0637\u064e\u0647\u0650\u0651\u0631\u0650\u064a\u0646\u064e',tr:'Allah mencintai orang yang banyak bertaubat dan mensucikan diri.',src:'QS. Al-Baqarah: 222'}
+];
+var mi=0;
+function showMot(){var m=MOTS[mi];document.getElementById('mot-ar').textContent=m.ar;document.getElementById('mot-tr').textContent='\u201c'+m.tr+'\u201d';document.getElementById('mot-src').textContent='\u2014 '+m.src;}
+function nextMot(){mi=(mi+1)%MOTS.length;showMot();}
+function setAr(){
+  var d={
+    'hdr-ar':'\u0625\u0650\u0646\u064e\u0651 \u0627\u0644\u0644\u064e\u0651\u0647\u064e \u064a\u064f\u062d\u0650\u0628\u064f\u0651 \u0627\u0644\u062a\u064e\u0651\u0648\u064e\u0651\u0627\u0628\u0650\u064a\u0646\u064e',
+    'ayat-lt':'Innall\u0101ha yuhibbut-taww\u0101b\u012bn',
+    'ayat-tr':'"Allah mencintai orang yang banyak bertaubat." \u2014 QS. Al-Baqarah: 222',
+    'dz1-ar':'\u0623\u064e\u0633\u0652\u062a\u064e\u063a\u0652\u0641\u0650\u0631\u064f \u0627\u0644\u0644\u064e\u0651\u0647\u064e \u0627\u0644\u0652\u0639\u064e\u0638\u0650\u064a\u0645\u064e \u0648\u064e\u0623\u064e\u062a\u064f\u0648\u0628\u064f \u0625\u0650\u0644\u064e\u064a\u0652\u0647\u0650',
+    'dz2-ar':'\u0627\u0644\u0644\u064e\u0651\u0647\u064f\u0645\u064e\u0651 \u0623\u064e\u0646\u0652\u062a\u064e \u0631\u064e\u0628\u064e\u0651\u064a \u0644\u064e\u0627 \u0625\u0650\u0644\u064e\u0647\u064e \u0625\u0650\u0644\u064e\u0651\u0627 \u0623\u064e\u0646\u0652\u062a\u064e',
+    'dz3-ar':'\u0633\u064f\u0628\u0652\u062d\u064e\u0627\u0646\u064e \u0627\u0644\u0644\u064e\u0651\u0647\u0650 \u0648\u064e\u0628\u0650\u062d\u064e\u0645\u0652\u062f\u0650\u0647\u0650',
+    'dz4-ar':'\u064a\u064e\u0627 \u0645\u064f\u0642\u064e\u0644\u0650\u0651\u0628\u064e \u0627\u0644\u0652\u0642\u064f\u0644\u064f\u0648\u0628\u0650 \u062b\u064e\u0628\u0650\u0651\u062a\u0652 \u0642\u064e\u0644\u0652\u0628\u0650\u064a \u0639\u064e\u0644\u064e\u0649 \u062f\u0650\u064a\u0646\u0650\u0643\u064e'
+  };
+  for(var k in d){var e=document.getElementById(k);if(e)e.textContent=d[k];}
+}
+function goTab(id,el){document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on');});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});document.getElementById(id).classList.add('on');el.classList.add('on');}
+function openFase(el){el.classList.toggle('op');}
+var TIDS=['t1','t2','t3','t4','t5','t6','t7','t8'];
+function tog(id){document.getElementById(id).classList.toggle('ck');saveTr();updProg();updStreak();}
+function updProg(){var c=document.querySelectorAll('.ti.ck').length;document.getElementById('pfill').style.width=Math.round(c/8*100)+'%';document.getElementById('ptxt').textContent=c+' / 8';}
+function saveTr(){var t=new Date().toDateString(),s={};TIDS.forEach(function(id){s[id]=document.getElementById(id).classList.contains('ck');});try{localStorage.setItem('tr_'+t,JSON.stringify(s));}catch(e){}}
+function loadTr(){var t=new Date().toDateString();try{var s=localStorage.getItem('tr_'+t);if(s){var d=JSON.parse(s);TIDS.forEach(function(id){if(d[id])document.getElementById(id).classList.add('ck');});}}catch(e){}updProg();}
+function updStreak(){var t=new Date().toDateString(),c=document.querySelectorAll('.ti.ck').length;try{var s=parseInt(localStorage.getItem('streak')||'0'),l=localStorage.getItem('streak_date');if(c>=5&&l!==t){var y=new Date();y.setDate(y.getDate()-1);s=(l===y.toDateString())?s+1:1;localStorage.setItem('streak',s);localStorage.setItem('streak_date',t);}document.getElementById('streak').textContent=s;}catch(e){}}
+var CNT={c1:0,c2:0,c3:0,c4:0};
+function inc(id){CNT[id]++;document.getElementById(id).textContent=CNT[id];saveCnt();}
+function dec(id){if(CNT[id]>0){CNT[id]--;document.getElementById(id).textContent=CNT[id];saveCnt();}}
+function resetAll(){['c1','c2','c3','c4'].forEach(function(id){CNT[id]=0;document.getElementById(id).textContent=0;});saveCnt();}
+function saveCnt(){try{localStorage.setItem('cnt_'+new Date().toDateString(),JSON.stringify(CNT));}catch(e){}}
+function loadCnt(){try{var s=localStorage.getItem('cnt_'+new Date().toDateString());if(s){var d=JSON.parse(s);for(var k in d){CNT[k]=d[k];document.getElementById(k).textContent=d[k];}}}catch(e){}}
+function sv(key){try{localStorage.setItem('cat_'+key,document.getElementById(key).value);var el=document.getElementById('sv-'+key);el.style.display='block';setTimeout(function(){el.style.display='none';},2000);}catch(e){}}
+function loadCat(){['doa','muhasabah','target'].forEach(function(k){try{var v=localStorage.getItem('cat_'+k);if(v)document.getElementById(k).value=v;}catch(e){}});}
+function showDate(){var d=new Date();document.getElementById('tgl').textContent=d.toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+window.onload=function(){setAr();showDate();showMot();loadTr();loadCnt();loadCat();updStreak();};
+</script>
+</body>
+</html>
