@@ -98,6 +98,7 @@ body{font-family:'Inter',sans-serif;background:#faf7f2;color:#1c1c1e;min-height:
 .pi .pk{font-size:1.4rem;display:block;margin-bottom:.3rem}
 .pi .pn{font-weight:500;color:#1c1c1e}
 .sv{font-size:.78rem;color:#1a6b4a;margin-top:.4rem;display:none}
+.fase-btn{transition:all .2s}
 </style>
 </head>
 <body>
@@ -113,6 +114,7 @@ body{font-family:'Inter',sans-serif;background:#faf7f2;color:#1c1c1e;min-height:
   <button class="tab" onclick="goTab('dzikir',this)">📿 Dzikir</button>
   <button class="tab" onclick="goTab('motivasi',this)">💛 Motivasi</button>
   <button class="tab" onclick="goTab('catatan',this)">📓 Catatan</button>
+  <button class="tab" onclick="goTab('rekap',this)">📊 Rekap</button>
 </div>
 <div class="main">
 <div class="sec on" id="beranda">
@@ -152,7 +154,7 @@ body{font-family:'Inter',sans-serif;background:#faf7f2;color:#1c1c1e;min-height:
       <div class="fh"><span class="ft">🕯️ Fase 1 — Menyalakan Cahaya</span><span class="fb">Bulan 1-3</span></div>
       <div class="fd">Kembali ke shalat. Ini fondasi segalanya.</div>
       <div class="fa">
-        <div class="ai"><div class="ad"></div><span>Shalat 5 waktu, meski awalnya bolong. Yang penting terus mencoba.</span></div>
+        <div class="ai"><div class="ad"></div><span>Shalat 5 waktu, meski awalnya bolong.</span></div>
         <div class="ai"><div class="ad"></div><span>Istighfar minimal 100x sehari.</span></div>
         <div class="ai"><div class="ad"></div><span>Shalat Taubat 2 rakaat minimal 1x seminggu.</span></div>
         <div class="ai"><div class="ad"></div><span>Hindari pemicu dosa lama.</span></div>
@@ -289,13 +291,69 @@ body{font-family:'Inter',sans-serif;background:#faf7f2;color:#1c1c1e;min-height:
     <div class="sv" id="sv-target">Tersimpan</div>
   </div>
 </div>
+<div class="sec" id="rekap">
+  <div class="st">📊 Rekap Perjalanan Taubat</div>
+  <div class="ib">Catat progress fase, amalan, dan catatan pribadi. Ini rekam jejakmu menuju Allah.</div>
+  <div class="card">
+    <h3>🎯 Fase Aktif Saat Ini</h3>
+    <p style="margin-bottom:.8rem">Saya sedang berada di fase:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem">
+      <div class="fase-btn" id="fb1" onclick="setFase(1)" style="background:#1a6b4a;color:#fff;border:2px solid #1a6b4a;border-radius:10px;padding:.7rem;text-align:center;cursor:pointer;font-size:.8rem;font-weight:600">🕯️ Fase 1</div>
+      <div class="fase-btn" id="fb2" onclick="setFase(2)" style="background:#fff;border:2px solid #e8f5ee;border-radius:10px;padding:.7rem;text-align:center;cursor:pointer;font-size:.8rem;font-weight:500;color:#6b7280">🌱 Fase 2</div>
+      <div class="fase-btn" id="fb3" onclick="setFase(3)" style="background:#fff;border:2px solid #e8f5ee;border-radius:10px;padding:.7rem;text-align:center;cursor:pointer;font-size:.8rem;font-weight:500;color:#6b7280">🌿 Fase 3</div>
+      <div class="fase-btn" id="fb4" onclick="setFase(4)" style="background:#fff;border:2px solid #e8f5ee;border-radius:10px;padding:.7rem;text-align:center;cursor:pointer;font-size:.8rem;font-weight:500;color:#6b7280">🌳 Fase 4</div>
+      <div class="fase-btn" id="fb5" onclick="setFase(5)" style="background:#fff;border:2px solid #e8f5ee;border-radius:10px;padding:.7rem;text-align:center;cursor:pointer;font-size:.8rem;font-weight:500;color:#6b7280;grid-column:span 2">♾️ Fase 5</div>
+    </div>
+    <div id="fase-desc-aktif" style="font-size:.83rem;color:#1a6b4a;background:#e8f5ee;padding:.8rem;border-radius:10px"></div>
+  </div>
+  <div class="card">
+    <h3>✅ Checklist Amalan Fase Aktif</h3>
+    <p style="margin-bottom:.8rem;font-size:.82rem;color:#6b7280">Centang amalan yang sudah konsisten:</p>
+    <div id="rekap-checklist"></div>
+  </div>
+  <div class="card card-g">
+    <h3>📈 Statistik</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.5rem">
+      <div style="background:rgba(255,255,255,.15);border-radius:10px;padding:.8rem;text-align:center">
+        <div style="font-size:1.8rem;font-weight:700" id="stat-streak">0</div>
+        <div style="font-size:.75rem;opacity:.85">Hari Istiqomah</div>
+      </div>
+      <div style="background:rgba(255,255,255,.15);border-radius:10px;padding:.8rem;text-align:center">
+        <div style="font-size:1.8rem;font-weight:700" id="stat-fase">1</div>
+        <div style="font-size:.75rem;opacity:.85">Fase Aktif</div>
+      </div>
+      <div style="background:rgba(255,255,255,.15);border-radius:10px;padding:.8rem;text-align:center">
+        <div style="font-size:1.8rem;font-weight:700" id="stat-amalan">0</div>
+        <div style="font-size:.75rem;opacity:.85">Amalan Hari Ini</div>
+      </div>
+      <div style="background:rgba(255,255,255,.15);border-radius:10px;padding:.8rem;text-align:center">
+        <div style="font-size:1.8rem;font-weight:700" id="stat-pct">0%</div>
+        <div style="font-size:.75rem;opacity:.85">Progress Hari Ini</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>📝 Catatan Pribadi Fase Ini</h3>
+    <p style="margin-bottom:.8rem;font-size:.82rem;color:#6b7280">Pengalaman dan perasaan di fase ini:</p>
+    <textarea class="ta" id="catatan-fase" placeholder="Di fase ini saya merasakan... Yang paling sulit adalah... Yang membantu adalah..."></textarea>
+    <button class="btn" type="button" style="margin-top:.7rem" onclick="saveCatatanFase()">Simpan Catatan</button>
+    <div class="sv" id="sv-catatan-fase">Tersimpan</div>
+  </div>
+  <div class="card">
+    <h3>🏆 Riwayat Pencapaian</h3>
+    <p style="margin-bottom:.8rem;font-size:.82rem;color:#6b7280">Catat tanggal selesai setiap fase:</p>
+    <div id="riwayat-list"></div>
+    <button class="btn" type="button" style="margin-top:.7rem;width:100%" onclick="tandaiFase()">🏆 Tandai Fase Ini Selesai</button>
+    <div class="sv" id="sv-riwayat">Tersimpan</div>
+  </div>
+</div>
 </div>
 <script>
 var MOTS=[
-  {ar:'\u0642\u064f\u0644\u0652 \u064a\u064e\u0627 \u0639\u0650\u0628\u064e\u0627\u062f\u0650\u064a\u064e \u0627\u0644\u064e\u0651\u0630\u0650\u064a\u0646\u064e \u0623\u064e\u0633\u0652\u0631\u064e\u0641\u064f\u0648\u0627 \u0644\u064e\u0627 \u062a\u064e\u0642\u0652\u0646\u064e\u0637\u064f\u0648\u0627 \u0645\u0650\u0646\u0652 \u0631\u064e\u062d\u0652\u0645\u064e\u0629\u0650 \u0627\u0644\u0644\u064e\u0651\u0647\u0650',tr:'Janganlah berputus asa dari rahmat Allah.',src:'QS. Az-Zumar: 53'},
+  {ar:'\u0642\u064f\u0644\u0652 \u064a\u064e\u0627 \u0639\u0650\u0628\u064e\u0627\u062f\u0650\u064a\u064e \u0644\u064e\u0627 \u062a\u064e\u0642\u0652\u0646\u064e\u0637\u064f\u0648\u0627 \u0645\u0650\u0646\u0652 \u0631\u064e\u062d\u0652\u0645\u064e\u0629\u0650 \u0627\u0644\u0644\u064e\u0651\u0647\u0650',tr:'Janganlah berputus asa dari rahmat Allah.',src:'QS. Az-Zumar: 53'},
   {ar:'\u0625\u0650\u0646\u064e\u0651 \u0627\u0644\u0644\u064e\u0651\u0647\u064e \u064a\u064e\u063a\u0652\u0641\u0650\u0631\u064f \u0627\u0644\u0630\u064f\u0651\u0646\u064f\u0648\u0628\u064e \u062c\u064e\u0645\u0650\u064a\u0639\u064b\u0627',tr:'Sesungguhnya Allah mengampuni dosa-dosa semuanya.',src:'QS. Az-Zumar: 53'},
-  {ar:'\u0643\u064f\u0644\u064f\u0651 \u0628\u064e\u0646\u0650\u064a \u0622\u062f\u064e\u0645\u064e \u062e\u064e\u0637\u064e\u0651\u0627\u0621\u064c \u0648\u064e\u062e\u064e\u064a\u0652\u0631\u064f \u0627\u0644\u0652\u062e\u064e\u0637\u064e\u0651\u0627\u0626\u0650\u064a\u0646\u064e \u0627\u0644\u062a\u064e\u0651\u0648\u064e\u0651\u0627\u0628\u064f\u0648\u0646\u064e',tr:'Setiap anak Adam berbuat salah, dan terbaik adalah yang banyak bertaubat.',src:'HR. Tirmidzi'},
-  {ar:'\u0625\u0650\u0646\u064e\u0651 \u0627\u0644\u0652\u062d\u064e\u0633\u064e\u0646\u064e\u0627\u062a\u0650 \u064a\u064f\u0630\u0652\u0647\u0650\u0628\u0652\u0646\u064e \u0627\u0644\u0633\u064e\u0651\u064a\u0650\u0651\u0626\u064e\u0627\u062a\u0650',tr:'Sesungguhnya kebaikan-kebaikan menghapus keburukan-keburukan.',src:'QS. Hud: 114'},
+  {ar:'\u0643\u064f\u0644\u064f\u0651 \u0628\u064e\u0646\u0650\u064a \u0622\u062f\u064e\u0645\u064e \u062e\u064e\u0637\u064e\u0651\u0627\u0621\u064c \u0648\u064e\u062e\u064e\u064a\u0652\u0631\u064f \u0627\u0644\u062a\u064e\u0651\u0648\u064e\u0651\u0627\u0628\u064f\u0648\u0646\u064e',tr:'Setiap anak Adam berbuat salah, terbaik adalah yang banyak bertaubat.',src:'HR. Tirmidzi'},
+  {ar:'\u0625\u0650\u0646\u064e\u0651 \u0627\u0644\u0652\u062d\u064e\u0633\u064e\u0646\u064e\u0627\u062a\u0650 \u064a\u064f\u0630\u0652\u0647\u0650\u0628\u0652\u0646\u064e \u0627\u0644\u0633\u064e\u0651\u064a\u0650\u0651\u0626\u064e\u0627\u062a\u0650',tr:'Kebaikan-kebaikan menghapus keburukan-keburukan.',src:'QS. Hud: 114'},
   {ar:'\u0625\u0650\u0646\u064e\u0651 \u0627\u0644\u0644\u064e\u0651\u0647\u064e \u064a\u064f\u062d\u0650\u0628\u064f\u0651 \u0627\u0644\u062a\u064e\u0651\u0648\u064e\u0651\u0627\u0628\u0650\u064a\u0646\u064e \u0648\u064e\u064a\u064f\u062d\u0650\u0628\u064f\u0651 \u0627\u0644\u0652\u0645\u064f\u062a\u064e\u0637\u064e\u0647\u0650\u0651\u0631\u0650\u064a\u0646\u064e',tr:'Allah mencintai orang yang banyak bertaubat dan mensucikan diri.',src:'QS. Al-Baqarah: 222'}
 ];
 var mi=0;
@@ -313,7 +371,7 @@ function setAr(){
   };
   for(var k in d){var e=document.getElementById(k);if(e)e.textContent=d[k];}
 }
-function goTab(id,el){document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on');});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});document.getElementById(id).classList.add('on');el.classList.add('on');}
+function goTab(id,el){document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on');});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});document.getElementById(id).classList.add('on');el.classList.add('on');if(id==='rekap')updateStatRekap();}
 function openFase(el){el.classList.toggle('op');}
 var TIDS=['t1','t2','t3','t4','t5','t6','t7','t8'];
 function tog(id){document.getElementById(id).classList.toggle('ck');saveTr();updProg();updStreak();}
@@ -330,7 +388,20 @@ function loadCnt(){try{var s=localStorage.getItem('cnt_'+new Date().toDateString
 function sv(key){try{localStorage.setItem('cat_'+key,document.getElementById(key).value);var el=document.getElementById('sv-'+key);el.style.display='block';setTimeout(function(){el.style.display='none';},2000);}catch(e){}}
 function loadCat(){['doa','muhasabah','target'].forEach(function(k){try{var v=localStorage.getItem('cat_'+k);if(v)document.getElementById(k).value=v;}catch(e){}});}
 function showDate(){var d=new Date();document.getElementById('tgl').textContent=d.toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
-window.onload=function(){setAr();showDate();showMot();loadTr();loadCnt();loadCat();updStreak();};
+var FASE_DESC=['','Fase 1 - Menyalakan Cahaya (Bulan 1-3): Kembali ke shalat 5 waktu dan istighfar harian.','Fase 2 - Menumbuhkan Akar (Bulan 4-6): Shalat konsisten, tambah sunnah dan Al-Quran.','Fase 3 - Membangun Rumah (Bulan 7-12): Ibadah stabil, bangun karakter mulia.','Fase 4 - Berbuah (Tahun ke-2): Taubat memberi manfaat bagi orang sekitar.','Fase 5 - Istiqomah Seumur Hidup: Taubat sebagai cara hidup menuju Husnul Khatimah.'];
+var FASE_AMALAN=[[],['Shalat 5 waktu meski awalnya bolong','Istighfar minimal 100x sehari','Shalat Taubat minimal 1x seminggu','Hindari pemicu dosa lama'],['Shalat sunnah rawatib rutin','Baca Al-Quran minimal 1 halaman per hari','Dzikir pagi dan petang','Bergaul dengan teman shalih'],['Puasa Senin-Kamis','Tahajud minimal 2x seminggu','Belajar ilmu agama rutin','Selesaikan hak orang lain'],['Ajak orang lain dengan lemah lembut','Amal jariyah rutin','Hafalan Al-Quran','Rencanakan umroh atau haji'],['Muhasabah setiap malam','Segera bangkit jika terjatuh','Perbarui niat setiap bulan','Berdoa Husnul Khatimah setiap hari']];
+var aktiveFase=1;
+function setFase(n){aktiveFase=n;try{localStorage.setItem('aktiveFase',n);}catch(e){}renderRekapFase();renderChecklist();loadCatatanFase();}
+function renderRekapFase(){for(var i=1;i<=5;i++){var el=document.getElementById('fb'+i);if(!el)continue;if(i===aktiveFase){el.style.background='#1a6b4a';el.style.color='#fff';el.style.borderColor='#1a6b4a';el.style.fontWeight='600';}else{el.style.background='#fff';el.style.color='#6b7280';el.style.borderColor='#e8f5ee';el.style.fontWeight='500';}}var desc=document.getElementById('fase-desc-aktif');if(desc)desc.textContent=FASE_DESC[aktiveFase];var sf=document.getElementById('stat-fase');if(sf)sf.textContent=aktiveFase;}
+function renderChecklist(){var el=document.getElementById('rekap-checklist');if(!el)return;var amalan=FASE_AMALAN[aktiveFase];var saved={};try{saved=JSON.parse(localStorage.getItem('rekap_ck_'+aktiveFase)||'{}');}catch(e){}var html='';amalan.forEach(function(a,i){var ck=saved[i]?'ck':'';html+='<div class="ti '+ck+'" onclick="togRekapCk('+i+')" style="text-align:left;display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;padding:.8rem;border-radius:10px"><div style="font-size:1.1rem">'+(saved[i]?'✅':'⬜')+'</div><div style="font-size:.83rem;color:'+(saved[i]?'#1a6b4a':'#1c1c1e')+'">'+a+'</div></div>';});el.innerHTML=html;}
+function togRekapCk(i){var saved={};try{saved=JSON.parse(localStorage.getItem('rekap_ck_'+aktiveFase)||'{}');}catch(e){}saved[i]=!saved[i];try{localStorage.setItem('rekap_ck_'+aktiveFase,JSON.stringify(saved));}catch(e){}renderChecklist();}
+function saveCatatanFase(){var val=document.getElementById('catatan-fase').value;try{localStorage.setItem('catatan_fase_'+aktiveFase,val);}catch(e){}var sv=document.getElementById('sv-catatan-fase');sv.style.display='block';setTimeout(function(){sv.style.display='none';},2000);}
+function loadCatatanFase(){try{var val=localStorage.getItem('catatan_fase_'+aktiveFase);var el=document.getElementById('catatan-fase');if(el)el.value=val||'';}catch(e){}}
+function tandaiFase(){var riwayat=[];try{riwayat=JSON.parse(localStorage.getItem('riwayat_fase')||'[]');}catch(e){}var today=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});var exists=riwayat.some(function(r){return r.fase===aktiveFase;});if(!exists){riwayat.push({fase:aktiveFase,tanggal:today,label:FASE_DESC[aktiveFase].split(':')[0]});try{localStorage.setItem('riwayat_fase',JSON.stringify(riwayat));}catch(e){}}renderRiwayat();var sv=document.getElementById('sv-riwayat');sv.style.display='block';setTimeout(function(){sv.style.display='none';},2000);}
+function renderRiwayat(){var el=document.getElementById('riwayat-list');if(!el)return;var riwayat=[];try{riwayat=JSON.parse(localStorage.getItem('riwayat_fase')||'[]');}catch(e){}if(riwayat.length===0){el.innerHTML='<p style="font-size:.82rem;color:#6b7280">Belum ada fase yang ditandai selesai.</p>';return;}var html='';riwayat.forEach(function(r){html+='<div style="display:flex;align-items:center;gap:.8rem;padding:.6rem 0;border-bottom:1px solid #e8f5ee"><div style="background:#1a6b4a;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">'+r.fase+'</div><div><div style="font-size:.83rem;font-weight:600;color:#1c1c1e">'+r.label+'</div><div style="font-size:.75rem;color:#6b7280">Selesai: '+r.tanggal+'</div></div></div>';});el.innerHTML=html;}
+function updateStatRekap(){try{var streak=parseInt(localStorage.getItem('streak')||'0');var ck=document.querySelectorAll('.ti.ck').length;var pct=Math.round(ck/8*100);var ss=document.getElementById('stat-streak');var sa=document.getElementById('stat-amalan');var sp=document.getElementById('stat-pct');if(ss)ss.textContent=streak;if(sa)sa.textContent=ck;if(sp)sp.textContent=pct+'%';}catch(e){}}
+function initRekap(){try{aktiveFase=parseInt(localStorage.getItem('aktiveFase')||'1');}catch(e){}renderRekapFase();renderChecklist();loadCatatanFase();renderRiwayat();updateStatRekap();}
+window.onload=function(){setAr();showDate();showMot();loadTr();loadCnt();loadCat();updStreak();initRekap();};
 </script>
 </body>
 </html>
